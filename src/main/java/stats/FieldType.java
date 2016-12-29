@@ -29,6 +29,7 @@ public enum FieldType {
 	PLUS_MINUS("PlusMinus", "N"),
 	PACE_ADJUST("PaceAdjust", "N"),
 	RANK("Rank", "N"),
+	STAT_TYPE("StatType", "Traditional", "Advanced", "Tracking"),
 	OPPONENT_TEAM_ID("OpponentTeamID", "0"),
 	PERIOD("Period", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
 	LAST_N_GAMES("LastNGames", "0"),
