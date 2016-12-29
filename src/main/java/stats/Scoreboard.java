@@ -22,6 +22,10 @@ public class Scoreboard extends Statistic {
 		super("scoreboard", fields, required_fields);
 	}
 	
+	public Scoreboard(Map<String, Object> fields, Connection c) {
+		super("scoreboard", fields, required_fields, c);
+	}
+	
 	@Override
 	public void load(String endpoint, Connection c) {
 		throw new UnsupportedOperationException();

@@ -1,6 +1,7 @@
 package stats;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
 
@@ -9,6 +10,7 @@ import api.Connection;
 public class StatsFactory {
 
 	private static Connection connection;
+	private static PlayerList playerList;
 	
 	public static void establishConnection() {
 		Map<String, String> headers = new HashMap<String, String>();
@@ -37,15 +39,32 @@ public class StatsFactory {
 	
 	public static Statistic getTodayScoreboard() {
 		Map<String, Object> fields = new HashMap<String, Object>();
-		Scoreboard score = new Scoreboard(fields);
-		score.load(connection);
+		Scoreboard score = new Scoreboard(fields, connection);
 		return score;
 	}
 	
 	public static Game getGame(String game_id) {
-		Game game = new Game(game_id);
-		game.load(connection);
+		Game game = new Game(game_id, connection);
 		return game;
+	}
+	
+	public static PlayerList getPlayerList() {
+		if(playerList == null) {
+			Map<String, Object> fields = new HashMap<String, Object>();
+			playerList = new PlayerList(fields, connection);
+		}
+		return playerList;
+	}
+	
+	public static Player getPlayer(String category, String value) {
+		Player p = getPlayerList().getPlayerBy(category, value);
+		p.loadSummary(connection);
+		return p;
+	}
+	
+	public static List<Player> getPlayers(String category, String value) {
+		List<Player> pl= getPlayerList().getPlayersBy(category, value);
+		return pl;
 	}
 }
 

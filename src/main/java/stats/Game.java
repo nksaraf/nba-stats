@@ -28,6 +28,25 @@ public class Game {
 		playerTracking = new PlayerTracking(fields);
 	}
 	
+	public Game(String game_id, Connection c) {
+		this(game_id);
+		load(c);
+	}
+	
+	public Game(String game_id, String boxscoretype) {
+		id = game_id;
+		Map<String, Object> fields = new HashMap<String, Object>();
+		fields.put("GameId", id);
+		boxScore = new BoxScore(boxscoretype, fields);
+		playByPlay = new PlayByPlay(fields);
+		playerTracking = new PlayerTracking(fields);
+	}
+	
+	public Game(String game_id, String boxscoretype, Connection c) {
+		this(game_id, boxscoretype);
+		load(c);
+	}
+	
 	public void load(BoxScore.Type type, Connection c) {
 		loadBoxScore(type, c);
 		loadPlayByPlay(c);

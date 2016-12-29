@@ -23,6 +23,10 @@ public class PlayerTracking extends Statistic {
 		super("boxscoreplayertrackingv2", fields, required_fields);
 	}
 	
+	public PlayerTracking(Map<String, Object> fields, Connection c) {
+		super("boxscoreplayertrackingv2", fields, required_fields, c);
+	}
+	
 	@Override
 	public void load(String endpoint, Connection c) {
 		throw new UnsupportedOperationException();

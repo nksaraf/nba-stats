@@ -13,17 +13,27 @@ import api.Connection;
 public class Statistic {
 	
 	public String description;
-	public JSONArray items;
+	private JSONArray items;
 	private Map<String, Object> fields;
 	private String api_endpoint;
 	private FieldType[] required_fields;
 	public List<StatItem> statItems;
+	public boolean loaded;
 	
 	public Statistic(String endpoint, Map<String, Object> fields, FieldType[] required_fields) {
 		this.fields = fields;
 		this.api_endpoint = endpoint;
 		this.required_fields = required_fields;
+		loaded = false;
 		
+	}
+	
+	public Statistic(String endpoint, Map<String, Object> fields, FieldType[] required_fields, Connection c) {
+		this.fields = fields;
+		this.api_endpoint = endpoint;
+		this.required_fields = required_fields;
+		loaded = false;
+		load(c);
 	}
 	
 //	public Statistic(Map<String, Object> fields, FieldType[] required_fields) {
@@ -65,6 +75,7 @@ public class Statistic {
 				this.items = null;
 			}
 		}
+		loaded = true;
 		loadStatItems();
 		
 	}
@@ -82,24 +93,43 @@ public class Statistic {
 	}
 	
 	public void printItemDescriptions() {
-		for(StatItem item: statItems) {
-			System.out.println(item.description);
+		if(loaded) {
+			for(StatItem item: statItems) {
+				System.out.println(item.description);
+			}
 		}
+		else System.out.println("Statistic not loaded yet");
+		
 	}
 	
 	public StatItem getItem(int index) {
-		return statItems.get(index);
+		if(loaded) {
+			return statItems.get(index);
+		} else return null;
+	}
+	
+	public void print() {
+		if(loaded) {
+			for(StatItem item: statItems) item.print();
+		} else System.out.println("Statistic not loaded yet");
 	}
 	
 	public void printItem(int index) {
-		statItems.get(index).print();
+		if(loaded) {
+			statItems.get(index).print();
+		}
+		else System.out.println("Statistic not loaded yet");
 	}
 	
 	public void printItems(int...indices) {
-		for(int i: indices) {
-			if(!(i >= statItems.size())) {
-				printItem(i);
+		if(loaded) {
+			for(int i: indices) {
+				if(!(i >= statItems.size())) {
+					printItem(i);
+				}
 			}
 		}
+		else System.out.println("Statistic not loaded yet");
+		
 	}
 }

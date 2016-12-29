@@ -25,6 +25,11 @@ public class PlayByPlay extends Statistic {
 		super("playbyplay", fields, required_fields);
 	}
 	
+	public PlayByPlay(Map<String, Object> fields, Connection c) {
+		super("playbyplay", fields, required_fields, c);
+	}
+	
+	
 	@Override
 	public void load(String endpoint, Connection c) {
 		throw new UnsupportedOperationException();

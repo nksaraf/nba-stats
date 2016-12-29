@@ -10,6 +10,7 @@ public enum FieldType {
 	SEASON_YEAR("SeasonYear", ""),
 	SEASON("Season", ""),
 	LEAGUE("LeagueID", "00", "01"),
+	PLAYER_ID("PlayerID", ""),
 	PER_MODE("PerMode", "PerGame", "Totals", "MinutesPer", "Per48", "Per40", "Per36", "PerMinute", "PerPossession", "PerPlay", "Per100Possessions", "Per100Plays"),
 	SEASON_TYPE("SeasonType", "Regular Season", "Pre Season", "Playoffs", "All-Star", "All Star", "Preseason"),
 	MEASURE_TYPE("MeasureType", "Base", "Advanced", "Misc", "Four Factors", "Scoring", "Opponent", "Usage"),
@@ -64,7 +65,8 @@ public enum FieldType {
 	DRAFT_PICK("DraftPick", "", "1st Round", "2nd Round", "1st Pick", "Lottery Pick", "Top 5 Pick", "Top 10 Pick", "Top 15 Pick", "Top 20 Pick", "Top 25 Pick", "Picks 11 Thru 20", "Picks 21 Thru 30", "Undrafted"),
 	PLAYER_POSITION("PlayerPosition", "", "F", "C", "G"),
 	PLAYER_EXPERIENCE("PlayerExperience", "", "Rookie", "Sophomore", "Veteran"),
-	STARTER_BENCH("StarterBench", "", "Starter", "Bench");
+	STARTER_BENCH("StarterBench", "", "Starter", "Bench"),
+	ONLY_CURRENT("IsOnlyCurrentSeason", "1", "0");
 	
 	private String description;
 	private String default_value;

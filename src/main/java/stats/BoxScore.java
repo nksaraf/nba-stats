@@ -37,6 +37,12 @@ public class BoxScore extends Statistic {
 		super("boxscore" + boxscore_type + "v2", fields, required_fields);
 		type = Type.getTypeFromString(boxscore_type);
 	}
+	
+	public BoxScore(String boxscore_type, Map<String, Object> fields, Connection c) {
+		super("boxscore" + boxscore_type + "v2", fields, required_fields);
+		type = Type.getTypeFromString(boxscore_type);
+		load(c);
+	}
 
 	/**
 	 * @param fields
@@ -49,6 +55,16 @@ public class BoxScore extends Statistic {
 	
 	public BoxScore(Type type, Map<String, Object> fields) {
 		super("boxscore" + type.description + "v2", fields, required_fields);
+		this.type = type;
+	}
+	
+	public BoxScore(Map<String, Object> fields, Connection c) {
+		super("boxscoresummaryv2", fields, required_fields, c);
+		type = Type.SUMMARY;
+	}
+	
+	public BoxScore(Type type, Map<String, Object> fields, Connection c) {
+		super("boxscore" + type.description + "v2", fields, required_fields, c);
 		this.type = type;
 	}
 	
@@ -98,9 +114,7 @@ public class BoxScore extends Statistic {
 		
 		public static Type getTypeFromString(String type) {
 			return mapStringToType.get(type);
-		}
-		
-		
+		}	
 	}
 	
 	public enum ItemType {
