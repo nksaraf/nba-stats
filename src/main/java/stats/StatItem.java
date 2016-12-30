@@ -37,7 +37,8 @@ public class StatItem {
 				System.out.print(item + "\t");
 			}
 			System.out.println();
-		}		
+		}	
+		System.out.println();
 	}
 	
 	public List<Object> getColumn(String header) {

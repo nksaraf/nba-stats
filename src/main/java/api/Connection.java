@@ -1,5 +1,5 @@
 /**
- * 
+ * Package dealing with querying the API
  */
 package api;
 
@@ -30,5 +30,12 @@ public class Connection {
 	
 	public JSONObject get(String endpoint, Map<String, Object> fields) {
 		return new UnirestQuery(base_url, endpoint, headers, fields).getResponse();
+	}
+	
+	public JSONObject get(String endpoint, Map<String, Object> fields, Map<String, String> additionalHeaders) {
+		for(String key: headers.keySet()) {
+			additionalHeaders.put(key, headers.get(key));
+		}
+		return new UnirestQuery(base_url, endpoint, additionalHeaders, fields).getResponse();
 	}
 }

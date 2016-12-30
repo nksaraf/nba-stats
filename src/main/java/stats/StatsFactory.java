@@ -19,10 +19,14 @@ public class StatsFactory {
 		setUpdatedDefaults();
 	}
 	
+	public static Connection getConnection() {
+		return connection;
+	}
+	
 	public static void setUpdatedDefaults() {
 		LocalDate date = LocalDate.now();
 		int year = date.getYear();
-		String seasonYear = year + "-" + (year%100);
+		String seasonYear = year + "-" + (year%100 + 1);
 		String month = "" +date.getMonthValue();
 		String day = "" + date.getDayOfMonth();
 		if(day.length() == 1){
@@ -58,7 +62,7 @@ public class StatsFactory {
 	
 	public static Player getPlayer(String category, String value) {
 		Player p = getPlayerList().getPlayerBy(category, value);
-		p.loadSummary(connection);
+		p.load(connection);
 		return p;
 	}
 	

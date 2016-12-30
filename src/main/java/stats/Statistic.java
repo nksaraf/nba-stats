@@ -12,6 +12,7 @@ import api.Connection;
 
 public class Statistic {
 	
+	public JSONObject jsonData;
 	public String description;
 	private JSONArray items;
 	private Map<String, Object> fields;
@@ -25,6 +26,7 @@ public class Statistic {
 		this.api_endpoint = endpoint;
 		this.required_fields = required_fields;
 		loaded = false;
+		fixFields();
 		
 	}
 	
@@ -33,6 +35,7 @@ public class Statistic {
 		this.api_endpoint = endpoint;
 		this.required_fields = required_fields;
 		loaded = false;
+		fixFields();
 		load(c);
 	}
 	
@@ -43,37 +46,44 @@ public class Statistic {
 //		
 //	}
 	
+	public void fixFields() {
+		if(fields == null) {
+			fields = new HashMap<String, Object>();
+		}
+		for(FieldType type: required_fields) {
+			if(!fields.containsKey(type.toString())) {
+					fields.put(type.toString(), type.getDefault());
+			}
+		}
+		for(String key: fields.keySet()) {
+			FieldType type = FieldType.getFieldTypeFromString(key);
+			if(!(type.possibleValue((String)fields.get(key)))) {
+				fields.put(key, type.getDefault());
+			}
+		}
+	}
+	
+	public void retrieveResults(JSONObject data) {
+		jsonData = data;
+		description = data.getString("resource");
+		if(data.has("resultSets")) {
+			this.items = data.getJSONArray("resultSets");
+		}
+		else if(data.has("resultSet")) {
+			this.items = data.getJSONArray("resultSet");
+		}
+		else {
+			this.items = null;
+		}
+	}
+	
 	public void load(Connection c) {
 		if(api_endpoint == "") {
 			System.out.println("Endpoint missing");
 		}
 		else {
-			if(fields == null) {
-				fields = new HashMap<String, Object>();
-			}
-			for(FieldType type: required_fields) {
-				if(!fields.containsKey(type.toString())) {
-						fields.put(type.toString(), type.getDefault());
-				}
-			}
-			for(String key: fields.keySet()) {
-				FieldType type = FieldType.getFieldTypeFromString(key);
-				if(!(type.possibleValue((String)fields.get(key)))) {
-					fields.put(key, type.getDefault());
-				}
-			}
-				
 			JSONObject data = c.get(api_endpoint, fields);
-			description = data.getString("resource");
-			if(data.has("resultSets")) {
-				this.items = data.getJSONArray("resultSets");
-			}
-			else if(data.has("resultSet")) {
-				this.items = data.getJSONArray("resultSet");
-			}
-			else {
-				this.items = null;
-			}
+			retrieveResults(data);
 		}
 		loaded = true;
 		loadStatItems();
@@ -83,6 +93,23 @@ public class Statistic {
 	public void load(String endpoint, Connection c) {
 		this.api_endpoint = endpoint;
 		load(c);
+	}
+	
+	public void loadWithHeader(Connection c, Map<String, String> headers) {
+		if(api_endpoint == "") {
+			System.out.println("Endpoint missing");
+		}
+		else {
+			JSONObject data = c.get(api_endpoint, fields, headers);
+			retrieveResults(data);
+		}
+		loaded = true;
+		loadStatItems();
+	}
+	
+	public void loadWithHeader(String endpoint, Connection c, Map<String, String> headers) {
+		this.api_endpoint = endpoint;
+		loadWithHeader(c, headers);
 	}
 	
 	public void loadStatItems() {

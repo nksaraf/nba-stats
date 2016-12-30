@@ -1,5 +1,5 @@
 /**
- * 
+ * Package dealing with querying the API
  */
 package api;
 
@@ -15,7 +15,6 @@ import com.mashape.unirest.request.HttpRequest;
 
 /**
  * @author nikhilsaraf
- *
  * Implementation of Query based on the Unirest HTTP Client Api.
  */
 public class UnirestQuery implements Query {

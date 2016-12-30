@@ -1,5 +1,5 @@
 /**
- * 
+ * Package dealing with querying the API
  */
 package api;
 
