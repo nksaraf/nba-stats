@@ -1,0 +1,46 @@
+{
+  "resource": "commonteamroster",
+  "resultSets": [
+    {
+      "headers": [
+        "TeamID",
+        "SEASON",
+        "LeagueID",
+        "PLAYER",
+        "NUM",
+        "POSITION",
+        "HEIGHT",
+        "WEIGHT",
+        "BIRTH_DATE",
+        "AGE",
+        "EXP",
+        "SCHOOL",
+        "PLAYER_ID"
+      ],
+      "rowSet": [],
+      "name": "CommonTeamRoster"
+    },
+    {
+      "headers": [
+        "TEAM_ID",
+        "SEASON",
+        "COACH_ID",
+        "FIRST_NAME",
+        "LAST_NAME",
+        "COACH_NAME",
+        "COACH_CODE",
+        "IS_ASSISTANT",
+        "COACH_TYPE",
+        "SCHOOL",
+        "SORT_SEQUENCE"
+      ],
+      "rowSet": [],
+      "name": "Coaches"
+    }
+  ],
+  "parameters": {
+    "TeamID": 1610612742,
+    "LeagueID": "00",
+    "Season": "2017-18"
+  }
+}
