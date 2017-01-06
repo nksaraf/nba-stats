@@ -67,17 +67,9 @@ public class Statistic {
 				ex.printStackTrace();
 			}
 		}
-		// System.out.println("File Content: \n" + jsonData);
 		JSONObject json = new JSONObject(jsonData);
 		retrieveResults(json);	
 	}
-
-	//	public Statistic(Map<String, Object> fields, FieldType[] required_fields) {
-	//		this.fields = fields;
-	//		this.api_endpoint = "";
-	//		this.required_fields = required_fields;
-	//		
-	//	}
 
 	public void fixFields() {
 		if(api_fields == null) {
@@ -207,7 +199,7 @@ public class Statistic {
 	public void dumpJSON() {
 		String filename = description + "_" + LocalDate.now().toString() + "_" + new Random().nextInt(100); 
 		try {
-			FileWriter w = new FileWriter(filename);
+			FileWriter w = new FileWriter("samples/" + filename);
 			w.write(json.toString());
 			w.close();
 		} catch(Exception e) {
