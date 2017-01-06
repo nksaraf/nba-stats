@@ -19,7 +19,7 @@ class ElementCLI {
 			String fieldOptions[] = Arrays.copyOfRange(args, indexField + 1, nextOption);
 			applyFields(fieldOptions);
 		}
-		stat.load(StatsFactory.getConnection());
+		stat.checkLoad();
 		
 		if(contains(args, "-h")) {
 			stat.printItemDescriptions();

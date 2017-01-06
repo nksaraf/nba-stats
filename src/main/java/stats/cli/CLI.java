@@ -39,6 +39,14 @@ public class CLI {
 				CombineCLI.get(Arrays.copyOfRange(args, 1, args.length));
 				break;
 			}
+			case "pvp": {
+				PvsPCLI.get(Arrays.copyOfRange(args, 1, args.length));
+				break;
+			}
+			case "tvp": {
+				TvsPCLI.get(Arrays.copyOfRange(args, 1, args.length));
+				break;
+			}
 			default: {
 				throw new IllegalArgumentException("Illegul element argument. [score/player/game/team expected]");
 			}

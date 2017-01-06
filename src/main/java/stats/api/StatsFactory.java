@@ -10,8 +10,10 @@ import stats.api.game.Game;
 import stats.api.league.League;
 import stats.api.player.Player;
 import stats.api.player.PlayerList;
+import stats.api.player.PlayerVsPlayer;
 import stats.api.team.Team;
 import stats.api.team.TeamList;
+import stats.api.team.TeamVsPlayer;
 import stats.api.util.Constants;
 import stats.api.util.FieldType;
 import stats.api.combine.DraftCombine;
@@ -75,8 +77,7 @@ public class StatsFactory {
 	}
 	
 	public static Game getGame(String game_id) {
-		Game game = new Game(game_id);
-		return game;
+		return new Game(game_id);
 	}
 	
 	public static PlayerList getPlayerList() {
@@ -88,13 +89,13 @@ public class StatsFactory {
 	}
 	
 	public static Player getPlayer(String category, String value) {
-		Player p = getPlayerList().getPlayerBy(category, value);
-		return p;
+		return getPlayerList().getPlayerBy(category, value);
+		
 	}
 	
 	public static List<Player> getPlayers(String category, String value) {
-		List<Player> pl= getPlayerList().getPlayersBy(category, value);
-		return pl;
+		return getPlayerList().getPlayersBy(category, value);
+		 
 	}
 	
 	public static Team getTeam(String team_id) {
@@ -112,6 +113,20 @@ public class StatsFactory {
 
 	public static DraftCombine getCombine(String year) {
 		return new DraftCombine(year);
+	}
+	
+	public static PlayerVsPlayer getPlayerVsPlayer(String player1, String player2) {
+		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
+		fields.put(FieldType.PLAYER_ID, player1);
+		fields.put(FieldType.VS_PLAYER_ID, player2);
+		return new PlayerVsPlayer(fields, getConnection());
+	}
+	
+	public static TeamVsPlayer getTeamVsPlayer(String team, String player) {
+		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
+		fields.put(FieldType.TEAM_ID, team);
+		fields.put(FieldType.VS_PLAYER_ID, player);
+		return new TeamVsPlayer(fields, getConnection());
 	}
 }
 
