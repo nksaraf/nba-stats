@@ -3,7 +3,7 @@ package stats.cli;
 import java.util.Arrays;
 
 import stats.api.StatsFactory;
-import stats.api.Team;
+import stats.api.team.Team;
 
 public class TeamCLI extends ElementCLI {
 

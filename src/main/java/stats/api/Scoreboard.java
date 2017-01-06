@@ -5,7 +5,10 @@ package stats.api;
 
 import java.util.Map;
 
-import stats.connection.Connection;
+import stats.api.connection.Connection;
+import stats.api.util.Constants;
+import stats.api.util.FieldType;
+import stats.api.util.Statistic;
 
 /**
  * @author nikhilsaraf

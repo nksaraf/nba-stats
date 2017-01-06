@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import stats.api.FieldType;
-import stats.api.Statistic;
 import stats.api.StatsFactory;
+import stats.api.util.FieldType;
+import stats.api.util.Statistic;
 
 class ElementCLI {
 

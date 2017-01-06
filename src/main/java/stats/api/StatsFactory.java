@@ -5,7 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
 
-import stats.connection.Connection;
+import stats.api.connection.Connection;
+import stats.api.game.Game;
+import stats.api.league.League;
+import stats.api.player.Player;
+import stats.api.player.PlayerList;
+import stats.api.team.Team;
+import stats.api.team.TeamList;
+import stats.api.util.Constants;
+import stats.api.util.FieldType;
 
 public class StatsFactory {
 
@@ -94,6 +102,11 @@ public class StatsFactory {
 	
 	public static TeamList getTeamList() {
 		return new TeamList(getConnection());
+	}
+
+	public static League getLeague() {
+		return new League();
+
 	}
 }
 

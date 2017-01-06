@@ -30,6 +30,10 @@ public class CLI {
 				StatsFactory.getTeamList().print();
 				break;
 			}
+			case "league": {
+				LeagueCLI.get(Arrays.copyOfRange(args, 1, args.length));
+				break;
+			}
 			default: {
 				throw new IllegalArgumentException("Illegul element argument. [score/player/game/team expected]");
 			}

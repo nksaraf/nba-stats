@@ -1,19 +1,35 @@
 package stats.cli;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-import stats.api.BoxScore;
-import stats.api.Game;
 import stats.api.StatsFactory;
+import stats.api.game.BoxScore;
+import stats.api.game.Game;
 
 public class GameCLI extends ElementCLI {
 
 	static Game game;
+	
+	static Map<String, BoxScore.Type> box;
+	static {
+		box = new HashMap<String, BoxScore.Type>();
+		box.put("-box-sum", BoxScore.Type.SUMMARY);
+		box.put("-box-trad", BoxScore.Type.TRADITIONAL);
+		box.put("-box-score", BoxScore.Type.SCORING);
+		box.put("-box-adv", BoxScore.Type.ADVANCED);
+		box.put("-box-misc", BoxScore.Type.MISC);
+		box.put("-box-usage", BoxScore.Type.USAGE);
+		box.put("-box-four", BoxScore.Type.FOUR_FACTORS);
+	}
+	
 	public static void get(String args[]) {
 		try {
-			
 			game = StatsFactory.getGame(args[0]);
+			if(game == null) throw new IllegalArgumentException("Wrong game id provided");
 			gameOptions(Arrays.copyOfRange(args, 1, args.length));
+			options(Arrays.copyOfRange(args, 1, args.length));
 			
 		} catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -24,58 +40,26 @@ public class GameCLI extends ElementCLI {
 		switch(args[0]) {
 			case "-pbp": {
 				stat = game.getFeature(Game.Feature.PLAY_BY_PLAY);
-				options(args);
 				break;
 			}
 			case "-pt": {
 				stat = game.getFeature(Game.Feature.PLAYER_TRACKING);
-				options(args);
 				break;
 			}
 			case "-box": {
 				stat = game.getBoxScore();
-				options(args);
 				break;
 			}
 			default: {
-				boxScoreOptions(args[0]);
-				options(args);
+				if(box.get(args[0]) == null) throw new IllegalArgumentException("Illegal game element option provided");
+				stat = game.getBoxScore(box.get(args[0]));
+				
 			}
 		}
+		if(stat == null) throw new IllegalArgumentException("Illegal game element option provided");
 	}
 	
-	static void boxScoreOptions(String arg) {
-		switch(arg) {
-		case "-box-sum": {
-			stat = game.getBoxScore(BoxScore.Type.SUMMARY);
-			break;
-		}
-		case "-box-trad": {
-			stat = game.getBoxScore(BoxScore.Type.TRADITIONAL);
-			break;
-		}
-		case "-box-scor": {
-			stat = game.getBoxScore(BoxScore.Type.SCORING);
-			break;
-		}
-		case "-box-adv": {
-			stat = game.getBoxScore(BoxScore.Type.ADVANCED);
-			break;
-		}
-		case "-box-misc": {
-			stat = game.getBoxScore(BoxScore.Type.MISC);
-			break;
-		}
-		case "-box-usage": {
-			stat = game.getBoxScore(BoxScore.Type.USAGE);
-			break;
-		}
-		case "-box-four": {
-			stat = game.getBoxScore(BoxScore.Type.FOUR_FACTORS);
-			break;
-		}
-		}
-	}
+	
 	
 	
 	

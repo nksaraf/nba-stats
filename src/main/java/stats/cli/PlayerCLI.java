@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import stats.api.Player;
-import stats.api.PlayerDashboard;
 import stats.api.StatsFactory;
+import stats.api.player.Player;
+import stats.api.player.PlayerDashboard;
 
 public class PlayerCLI extends ElementCLI {
 
@@ -22,12 +22,12 @@ public class PlayerCLI extends ElementCLI {
 		dash.put("-dash-clutch", PlayerDashboard.Type.CLUTCH_SPLITS);
 		dash.put("-dash-perf", PlayerDashboard.Type.TEAM_PERFORMANCE_SPLITS);
 		dash.put("-dash-year", PlayerDashboard.Type.YEAR_OVER_YEAR_SPLITS);
-		dash.put("-dash-shottr", PlayerDashboard.Type.SHOT_TRACKING);
-		dash.put("-dash-passtr", PlayerDashboard.Type.PASS_TRACKING);
-		dash.put("-dash-rebtr", PlayerDashboard.Type.REBOUND_TRACKING);
-		dash.put("-dash-deftr", PlayerDashboard.Type.DEFENSE_TRACKING);
-		dash.put("-dash-shotlogtr", PlayerDashboard.Type.SHOT_LOG_TRACKING);
-		dash.put("-dash-reblogtr", PlayerDashboard.Type.REBOUND_LOG_TRACKING);
+		dash.put("-dash-shotpt", PlayerDashboard.Type.SHOT_TRACKING);
+		dash.put("-dash-passpt", PlayerDashboard.Type.PASS_TRACKING);
+		dash.put("-dash-rebpt", PlayerDashboard.Type.REBOUND_TRACKING);
+		dash.put("-dash-defpt", PlayerDashboard.Type.DEFENSE_TRACKING);
+		dash.put("-dash-shotlogpt", PlayerDashboard.Type.SHOT_LOG_TRACKING);
+		dash.put("-dash-reblogpt", PlayerDashboard.Type.REBOUND_LOG_TRACKING);
 	}
 	public static void get(String args[]) {
 		try {
@@ -68,11 +68,13 @@ public class PlayerCLI extends ElementCLI {
 				break;
 			}
 			default: {
+				if(dash.get(args[0]) == null) throw new IllegalArgumentException("Illegal player element option provided.");
 				stat = player.getDashboard(dash.get(args[0]));
-				if(stat == null) {
-					throw new IllegalArgumentException("No player element option provided.");
-				}
+				
 			}
+		}
+		if(stat == null) {
+			throw new IllegalArgumentException("Illegal player element option provided.");
 		}
 	}
 	
