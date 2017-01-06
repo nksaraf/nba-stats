@@ -43,15 +43,6 @@ public class StatItem {
 	public void print() {
 		
 		System.out.println("\t\t\t\t" + description.toUpperCase());
-//		for(String header: headers) System.out.print(header +"\t");
-//		System.out.println();
-//		for(JSONArray row: rows) {
-//			for(Object item: row) {
-//				System.out.print(item + "\t");
-//			}
-//			System.out.println();
-//		}	
-//		System.out.println();
 		table.printTable();
 		System.out.println("\n");
 	}

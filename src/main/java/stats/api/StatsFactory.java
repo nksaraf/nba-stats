@@ -14,6 +14,7 @@ import stats.api.team.Team;
 import stats.api.team.TeamList;
 import stats.api.util.Constants;
 import stats.api.util.FieldType;
+import stats.api.combine.DraftCombine;
 
 public class StatsFactory {
 
@@ -107,6 +108,10 @@ public class StatsFactory {
 	public static League getLeague() {
 		return new League();
 
+	}
+
+	public static DraftCombine getCombine(String year) {
+		return new DraftCombine(year);
 	}
 }
 

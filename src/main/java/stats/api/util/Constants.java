@@ -46,7 +46,10 @@ public enum Constants {
 		LEAGUE_LEADERS_TILES("leaderstiles"),
 		LEAGUE_LINEUPS("leaguedashlineups"),
 		LEAGUE_PLAYER_STATS("leaguedashplayerstats"),
-		LEAGUE_GAME_LOG("leaguegamelog");
+		LEAGUE_GAME_LOG("leaguegamelog"),
+		COMBINE_SUMMARY("draftcombinestats"),
+		DRILL_RESULTS("draftcombinedrillresults"),
+		SPOT_SHOOTING("draftcombinespotshooting");
 		
 		
 		private String value;

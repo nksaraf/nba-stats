@@ -7,6 +7,7 @@ import stats.api.StatsFactory;
 public class CLI {
 	
 	public static void main(String args[]) {
+		StatsFactory.establishConnection();
 		try {
 			if(args.length == 0) throw new IllegalArgumentException("No arguments provided");
 			switch(args[0]) {
@@ -32,6 +33,10 @@ public class CLI {
 			}
 			case "league": {
 				LeagueCLI.get(Arrays.copyOfRange(args, 1, args.length));
+				break;
+			}
+			case "combine": {
+				CombineCLI.get(Arrays.copyOfRange(args, 1, args.length));
 				break;
 			}
 			default: {
