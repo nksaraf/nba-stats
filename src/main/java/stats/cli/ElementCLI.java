@@ -19,6 +19,7 @@ class ElementCLI {
 			String fieldOptions[] = Arrays.copyOfRange(args, indexField + 1, nextOption);
 			applyFields(fieldOptions);
 		}
+		stat.load(StatsFactory.getConnection());
 		
 		if(contains(args, "-h")) {
 			stat.printItemDescriptions();
@@ -66,10 +67,10 @@ class ElementCLI {
 			String value;
 			int sep;
 			if(field.contains(":")) {
-				sep = Arrays.binarySearch(field.toCharArray(),':');
+				sep = field.indexOf(':');
 			}
 			else if(field.contains("=")) {
-				sep = Arrays.binarySearch(field.toCharArray(),'=');
+				sep = field.indexOf('=');
 			}
 			else continue;
 			type = field.substring(0, sep);

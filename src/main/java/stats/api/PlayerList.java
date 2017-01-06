@@ -3,6 +3,7 @@
  */
 package stats.api;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class PlayerList extends Statistic {
 		};
 	
 	private List<Player> players;
+	private Map<String, Player> idToPlayer;
+	private Map<String, Player> playerCodeToPlayer;
 	/**
 	 * @param endpoint
 	 * @param fields
@@ -31,10 +34,12 @@ public class PlayerList extends Statistic {
 	 */
 	public PlayerList(Map<FieldType, Object> fields) {
 		super(Constants.Endpoints.PLAYER_LIST.toString(), fields, required_fields);
+		
 	}
 	
 	public PlayerList(Map<FieldType, Object> fields, Connection c) {
 		super(Constants.Endpoints.PLAYER_LIST.toString(), fields, required_fields, c);
+
 		load(c);
 	}
 	
@@ -42,8 +47,13 @@ public class PlayerList extends Statistic {
 	public void load(Connection c) {
 		super.load(c);
 		players = new LinkedList<Player>();
+		idToPlayer = new HashMap<String, Player>();
+		playerCodeToPlayer = new HashMap<String, Player>();
 		for(JSONArray row: statItems.get(0).rows) {
-			players.add(new Player(row));
+			Player p = new Player(row);
+			players.add(p);
+			idToPlayer.put(p.id, p);
+			playerCodeToPlayer.put(p.getDetail("PLAYER_CODE"), p);
 		}
 	}
 	
@@ -55,8 +65,20 @@ public class PlayerList extends Statistic {
 		return p;
 	}
 	
-	public Player getPlayerById(String id) {
-		return getPlayerBy("ID", id);
+	public Player getPlayerById(String id) throws PlayerNotFoundException {
+		Player p = idToPlayer.get(id);
+		if(p != null) {
+			return p;
+		}
+		else throw new PlayerNotFoundException();
+	}
+	
+	public Player getPlayerByCode(String playerCode) throws PlayerNotFoundException {
+		Player p = playerCodeToPlayer.get(playerCode);
+		if(p != null) {
+			return p;
+		}
+		else throw new PlayerNotFoundException();
 	}
 	
 	public Player getPlayerBy(String category, String value) {

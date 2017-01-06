@@ -27,7 +27,7 @@ public class TeamDetails extends Statistic {
 		super(Constants.Endpoints.TEAM_DETAILS.toString(), fields, required_fields, c);
 	}
 	
-	public enum ItemType {
+	public enum ItemType implements Statistic.ItemType {
 		BACKGROUND(0),
 		HISTORY(1),
 		SOCIAL_SITES(2),

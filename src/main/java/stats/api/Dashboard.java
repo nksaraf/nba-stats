@@ -37,19 +37,13 @@ public abstract class Dashboard extends Statistic {
 	
 	public Dashboard(String endpoint, Map<FieldType, Object> fields) {
 		super(endpoint, fields, required_fields);
+		
 	}
 	
 	public Dashboard(String endpoint, Map<FieldType, Object> fields, Connection c) {
 		super(endpoint, fields, required_fields, c);
 	}
 	
-	public abstract void setType(String dashboard_type);
-	
-	public void setType(Type t) {
-		type = t;
-		loaded = false;
-	}
-
 	public Type getType() {
 		return type;
 	}

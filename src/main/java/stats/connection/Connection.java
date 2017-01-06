@@ -33,9 +33,7 @@ public class Connection {
 	}
 	
 	public JSONObject get(String endpoint, Map<String, Object> fields, Map<String, String> additionalHeaders) {
-		for(String key: headers.keySet()) {
-			additionalHeaders.put(key, headers.get(key));
-		}
+		headers.forEach(additionalHeaders::putIfAbsent);
 		return new UnirestQuery(base_url, endpoint, additionalHeaders, fields).getResponse();
 	}
 }

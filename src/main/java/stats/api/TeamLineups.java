@@ -37,15 +37,16 @@ public class TeamLineups extends Statistic {
 	 * @param required_fields
 	 */
 	public TeamLineups(Map<FieldType, Object> fields) {
-		super(Constants.Endpoints.TEAM_SEASONS.toString(), fields, required_fields);
+		super(Constants.Endpoints.TEAM_LINEUPS.toString(), fields, required_fields);
 	}
 	
 	public TeamLineups(Map<FieldType, Object> fields, Connection c) {
-		super(Constants.Endpoints.TEAM_SEASONS.toString(), fields, required_fields, c);
+		super(Constants.Endpoints.TEAM_LINEUPS.toString(), fields, required_fields, c);
 	}
 	
 	public enum ItemType implements Statistic.ItemType {
-		INFO(0);
+		OVERALL(0),
+		LINEUPS(1);
 		
 		private int index;
 		

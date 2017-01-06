@@ -17,6 +17,7 @@ public class PlayByPlay extends Statistic {
 			FieldType.GAME_ID,
 			FieldType.START_PERIOD,
 			FieldType.END_PERIOD };
+	
 	/**
 	 * @param fields
 	 * @param required_fields

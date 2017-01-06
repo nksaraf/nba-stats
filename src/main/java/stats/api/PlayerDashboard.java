@@ -16,16 +16,6 @@ import stats.connection.Connection;
  */
 public class PlayerDashboard extends Dashboard {
 
-	public PlayerDashboard(String dashboard_type, Map<FieldType, Object> fields) {
-		super(Constants.Endpoints.PLAYER.toString() + dashboard_type, fields);
-		type = Type.getTypeFromString(dashboard_type);
-	}
-	
-	public PlayerDashboard(String dashboard_type, Map<FieldType, Object> fields, Connection c) {
-		super(Constants.Endpoints.PLAYER.toString() + dashboard_type, fields, c);
-		type = Type.getTypeFromString(dashboard_type);
-	}
-
 	public PlayerDashboard(Map<FieldType, Object> fields) {
 		super(Constants.Endpoints.PLAYER.toString() + Type.GENERAL_SPLITS.toString(), fields);
 		type = Type.GENERAL_SPLITS;
@@ -48,6 +38,13 @@ public class PlayerDashboard extends Dashboard {
 	
 	public void setType(String dashboard_type) {
 		type = Type.getTypeFromString(dashboard_type);
+		setEndpoint(Constants.Endpoints.PLAYER.toString() + type.toString());
+		loaded = false;
+	}
+	
+	public void setType(Type t) {
+		type = t;
+		setEndpoint(Constants.Endpoints.PLAYER.toString() + type.toString());
 		loaded = false;
 	}
 	
@@ -165,10 +162,9 @@ public class PlayerDashboard extends Dashboard {
 		NUM_CONTESTED_REBOUNDING(Type.REBOUND_TRACKING, 2),
 		SHOT_DISTANCE_REBOUNDING(Type.REBOUND_TRACKING, 3),
 		REBOUND_DISTANCE_REBOUNDING(Type.REBOUND_TRACKING, 4),
-		
-		OVERALL_PASS_TRACKING(Type.PASS_TRACKING, 0),
-		PASSES_MADE(Type.PASS_TRACKING, 1),
-		PASSES_RECEIVED(Type.PASS_TRACKING, 2),
+	
+		PASSES_MADE(Type.PASS_TRACKING, 0),
+		PASSES_RECEIVED(Type.PASS_TRACKING, 1),
 		
 		OVERALL_DEFENSE_TRACKING(Type.DEFENSE_TRACKING, 0),
 		

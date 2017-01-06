@@ -10,7 +10,25 @@ import stats.connection.Connection;
       
 /**
  * @author nikhilsaraf
- *
+ * 
+ * Represents the Box Score of a NBA Game. 
+ * 
+ * There are various types of box scores that you can get.
+ * - Summary
+ * - Traditional
+ * - Scoring
+ * - Advanced
+ * - Usage
+ * - Misc
+ * - Four Factors
+ * 
+ * The default is Summary. You can get a different box score by either setting it
+ * in the constuctor or using the setType() function. The boxscore will need to 
+ * be loaded again after setting a new type. 
+ * 
+ * Required Fields: GameID, Season, SeasonType, RangeType, StartPeriod, EndPeriod, StartRange, EndRange
+ * Look at FieldType to understand what each of these fields are and what the expected values for each of them are.
+ * 
  */
 public class BoxScore extends Statistic {
 
@@ -25,16 +43,6 @@ public class BoxScore extends Statistic {
 			FieldType.END_RANGE };
 	
 	private Type type;
-	
-	public BoxScore(String boxscore_type, Map<FieldType, Object> fields) {
-		super(Constants.Endpoints.BOX_SCORE.toString() + boxscore_type, fields, required_fields);
-		type = Type.getTypeFromString(boxscore_type);
-	}
-	
-	public BoxScore(String boxscore_type, Map<FieldType, Object> fields, Connection c) {
-		super(Constants.Endpoints.BOX_SCORE.toString(), fields, required_fields, c);
-		type = Type.getTypeFromString(boxscore_type);
-	}
 
 	public BoxScore(Map<FieldType, Object> fields) {
 		super(Constants.Endpoints.BOX_SCORE.toString() + Type.SUMMARY.toString(), fields, required_fields);
@@ -51,25 +59,32 @@ public class BoxScore extends Statistic {
 		type = Type.SUMMARY;
 	}
 	
-	public BoxScore(Type type,Map<FieldType, Object> fields, Connection c) {
+	public BoxScore(Type type, Map<FieldType, Object> fields, Connection c) {
 		super(Constants.Endpoints.BOX_SCORE.toString() + type.toString(), fields, required_fields, c);
 		this.type = type;
 	}
 	
 	public void setType(String boxscore_type) {
+		
 		type = Type.getTypeFromString(boxscore_type);
+		setEndpoint(Constants.Endpoints.BOX_SCORE.toString() + type.toString());
 		loaded = false;
 	}
 	
 	public void setType(Type t) {
 		type = t;
+		setEndpoint(Constants.Endpoints.BOX_SCORE.toString() + type.toString());
 		loaded = false;
 	}
 
 	public StatItem getItem(ItemType item) {
 		if(type == item.getType()) {
 			return getItem(item.getIndex());
-		} else return null;
+		} else {
+			setType(item.getType());
+			load(StatsFactory.getConnection());
+			return getItem(item.getIndex());
+		}
 	}
 
 	public Type getType() {

@@ -31,13 +31,17 @@ public enum Constants {
 		PLAYER_GAMELOG("playergamelog"),
 		PLAYER_SUMMARY("commonplayerinfo"),
 		PLAYER_LIST("commonallplayers"),
+		PLAYER_CAREER("playerprofilev2"),
+		SHOT_CHART("shotchartdetail"),
 		SCOREBOARD("scoreboard"),
+		TEAM_LIST("commonteamyears"),
 		TEAM("team"),
 		TEAM_DETAILS("teamdetails"),
 		TEAM_ROSTER("commonteamroster"),
 		TEAM_SUMMARY("teaminfocommon"),
 		TEAM_GAMELOG("teamgamelog"),
-		TEAM_SEASONS("teamyearbyyearstats");
+		TEAM_SEASONS("teamyearbyyearstats"),
+		TEAM_LINEUPS("teamdashlineups");
 		
 		private String value;
 		

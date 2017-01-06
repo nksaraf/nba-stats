@@ -37,7 +37,6 @@ public class Game extends Element{
 	
 	public StatItem getBoxScoreItem(BoxScore.ItemType item) {
 		BoxScore box_score = ((BoxScore)getFeature(Feature.BOXSCORE));
-		box_score.setType(item.getType());
 		return box_score.getItem(item);
 	}
 

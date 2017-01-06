@@ -214,11 +214,16 @@ public class Statistic {
 	public StatItem getItem(ItemType t) {
 		return getItem(t.getIndex());
 	}
+	
+	public void setEndpoint(String value) {
+		api_endpoint = value;
+	}
 
 	public interface ItemType {
 
 		int getIndex();
 	}
+	
 	
 	
 }

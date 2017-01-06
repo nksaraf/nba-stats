@@ -9,16 +9,6 @@ import java.util.Map;
 import stats.connection.Connection;
 
 public class TeamDashboard extends Dashboard {
-	
-	public TeamDashboard(String dashboard_type, Map<FieldType, Object> fields) {
-		super(Constants.Endpoints.TEAM.toString() + dashboard_type, fields);
-		type = Type.getTypeFromString(dashboard_type);
-	}
-	
-	public TeamDashboard(String dashboard_type, Map<FieldType, Object> fields, Connection c) {
-		super(Constants.Endpoints.TEAM.toString() + dashboard_type, fields, c);
-		type = Type.getTypeFromString(dashboard_type);
-	}
 
 	public TeamDashboard(Map<FieldType, Object> fields) {
 		super(Constants.Endpoints.TEAM.toString() + Type.GENERAL_SPLITS.toString(), fields);
@@ -42,9 +32,15 @@ public class TeamDashboard extends Dashboard {
 	
 	public void setType(String dashboard_type) {
 		type = Type.getTypeFromString(dashboard_type);
+		setEndpoint(Constants.Endpoints.TEAM.toString() + type.toString());
 		loaded = false;
 	}
 	
+	public void setType(Type t) {
+		type = t;
+		setEndpoint(Constants.Endpoints.TEAM.toString() + type.toString());
+		loaded = false;
+	}
 	
 	public enum Type implements Dashboard.Type {
 		GENERAL_SPLITS("dashboardbygeneralsplits"),

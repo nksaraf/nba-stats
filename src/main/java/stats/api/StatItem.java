@@ -28,7 +28,7 @@ public class StatItem {
 		for(Object row: rowList) {
 			rows.add((JSONArray)row);
 		}
-		Object[][] row_sets = new Object[rows.size()][rows.get(0).length()];
+		Object[][] row_sets = new Object[rows.size()][headers.size()];
 		for(int i = 0; i < rows.size(); i++) {
 			row_sets[i] = rows.get(i).toList().toArray();
 		}
@@ -42,7 +42,7 @@ public class StatItem {
 
 	public void print() {
 		
-		System.out.println("\n" + description.toUpperCase() +"\n");
+		System.out.println(description.toUpperCase() +"\n");
 //		for(String header: headers) System.out.print(header +"\t");
 //		System.out.println();
 //		for(JSONArray row: rows) {
@@ -53,10 +53,11 @@ public class StatItem {
 //		}	
 //		System.out.println();
 		table.printTable();
+		System.out.println();
 	}
 	
 	public List<Object> getColumn(String header) {
-		int index = header.indexOf(header);
+		int index = headers.indexOf(header);
 		return getColumn(index);
 		
 	}

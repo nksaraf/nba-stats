@@ -67,7 +67,8 @@ public enum FieldType {
 	PLAYER_EXPERIENCE("PlayerExperience", "", "Rookie", "Sophomore", "Veteran"),
 	STARTER_BENCH("StarterBench", "", "Starter", "Bench"),
 	ONLY_CURRENT("IsOnlyCurrentSeason", "1", "0"),
-	VS_PLAYER_ID("VsPlayerID", "");
+	VS_PLAYER_ID("VsPlayerID", ""),
+	ROOKIE_YEAR("RookieYear", "");
 	
 	private String description;
 	private String default_value;

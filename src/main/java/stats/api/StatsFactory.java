@@ -12,6 +12,10 @@ public class StatsFactory {
 	private static Connection connection;
 	private static PlayerList player_list;
 	
+	static {
+		establishConnection();
+	}
+	
 	public static void establishConnection() {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("referer", Constants.SCORES_REFERER.toString());
@@ -62,7 +66,7 @@ public class StatsFactory {
 	}
 	
 	public static Game getGame(String game_id) {
-		Game game = new Game(game_id, connection);
+		Game game = new Game(game_id);
 		return game;
 	}
 	
@@ -76,13 +80,20 @@ public class StatsFactory {
 	
 	public static Player getPlayer(String category, String value) {
 		Player p = getPlayerList().getPlayerBy(category, value);
-		p.load(connection);
 		return p;
 	}
 	
 	public static List<Player> getPlayers(String category, String value) {
 		List<Player> pl= getPlayerList().getPlayersBy(category, value);
 		return pl;
+	}
+	
+	public static Team getTeam(String team_id) {
+		return new Team(team_id);
+	}
+	
+	public static TeamList getTeamList() {
+		return new TeamList(getConnection());
 	}
 }
 
