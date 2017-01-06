@@ -48,13 +48,13 @@ public class StatsFactory {
 		FieldType.SEASON_YEAR.setDefault(seasonYear);
 	}
 	
-	public static Statistic getTodayScoreboard() {
+	public static Scoreboard getTodayScoreboard() {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		Scoreboard score = new Scoreboard(fields, connection);
 		return score;
 	}
 	
-	public static Statistic getScoreboard(String game_date) {
+	public static Scoreboard getScoreboard(String game_date) {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		fields.put(FieldType.GAME_DATE, game_date);
 		Scoreboard score = new Scoreboard(fields, connection);

@@ -6,11 +6,14 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import dnl.utils.text.table.TextTable;
+
 public class StatItem {
 	
 	public String description;
 	List<String> headers;
 	List<JSONArray> rows;
+	TextTable table;
 	
 	public StatItem(JSONObject item) {
 		
@@ -25,20 +28,31 @@ public class StatItem {
 		for(Object row: rowList) {
 			rows.add((JSONArray)row);
 		}
+		Object[][] row_sets = new Object[rows.size()][rows.get(0).length()];
+		for(int i = 0; i < rows.size(); i++) {
+			row_sets[i] = rows.get(i).toList().toArray();
+		}
+		String[] header_set = new String[headers.size()];
+		for(int i = 0; i < headers.size(); i++) {
+			header_set[i] = headers.get(i);
+		}
+		table = new TextTable(header_set,  row_sets);
 		
 	}
 
 	public void print() {
-		System.out.println(description +"\n");
-		for(String header: headers) System.out.print(header +"\t");
-		System.out.println();
-		for(JSONArray row: rows) {
-			for(Object item: row) {
-				System.out.print(item + "\t");
-			}
-			System.out.println();
-		}	
-		System.out.println();
+		
+		System.out.println("\n" + description.toUpperCase() +"\n");
+//		for(String header: headers) System.out.print(header +"\t");
+//		System.out.println();
+//		for(JSONArray row: rows) {
+//			for(Object item: row) {
+//				System.out.print(item + "\t");
+//			}
+//			System.out.println();
+//		}	
+//		System.out.println();
+		table.printTable();
 	}
 	
 	public List<Object> getColumn(String header) {
@@ -87,4 +101,9 @@ public class StatItem {
 		return rows.get(getColumn(header).indexOf(value));
 	}
 
+	public void printHeaders() {
+		for(String header: headers) {
+			System.out.println("  " + headers.indexOf(header) + "\t" + header);
+		}
+	}
 }

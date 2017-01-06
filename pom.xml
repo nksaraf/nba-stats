@@ -1,36 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.nsaraf98</groupId>
-  <artifactId>fantasy_nba</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Fantasy NBA</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-  	<dependency>
-  		<groupId>com.mashape.unirest</groupId>
-  		<artifactId>unirest-java</artifactId>
-  		<version>1.4.9</version>
-  	</dependency>
-  	<dependency>
-	  <groupId>org.apache.httpcomponents</groupId>
-	  <artifactId>httpclient</artifactId>
-	  <version>4.3.6</version>
-	</dependency>
-	<dependency>
-	  <groupId>org.apache.httpcomponents</groupId>
-	  <artifactId>httpasyncclient</artifactId>
-	  <version>4.0.2</version>
-	</dependency>
-	<dependency>
-	  <groupId>org.apache.httpcomponents</groupId>
-	  <artifactId>httpmime</artifactId>
-	  <version>4.3.6</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.json</groupId>
-	    <artifactId>json</artifactId>
-	    <version>20160810</version>
-	</dependency>
-  </dependencies>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.nsaraf98</groupId>
+	<artifactId>fantasy_nba</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Fantasy NBA</name>
+	<url>http://maven.apache.org</url>
+	<!-- <repositories>
+    <repository>
+        <id>j-text-utils-repo</id>
+        <url>http://jexem.googlecode.com/svn/trunk/repo/</url>
+    </repository>
+    </repositories> -->
+	<dependencies>
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>1.4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpasyncclient</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
+		</dependency>
+		<dependency>
+		  <groupId>dnl.utils</groupId>
+		  <artifactId>j-text-utils</artifactId>
+		  <version>0.3.3</version>
+		  <systemPath>${project.basedir}/src/lib/j-text-utils-0.3.3.jar</systemPath>
+		  <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+	</dependencies>
 </project>

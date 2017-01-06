@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import stats.connection.Connection;
 
 public class Statistic {
-	
+
 	public JSONObject json;
 	public String description;
 	private JSONArray items;
@@ -29,7 +29,7 @@ public class Statistic {
 	private List<FieldType> required_fields;
 	public List<StatItem> statItems;
 	public boolean loaded;
-	
+
 	public Statistic(String endpoint, Map<FieldType, Object> fields, FieldType[] required_fields) {
 		this.fields = fields;
 		this.api_endpoint = endpoint;
@@ -37,7 +37,7 @@ public class Statistic {
 		loaded = false;
 		fixFields();
 	}
-	
+
 	public Statistic(String endpoint, Map<FieldType, Object> fields, FieldType[] required_fields, Connection c) {
 		this.fields = fields;
 		this.api_endpoint = endpoint;
@@ -46,7 +46,7 @@ public class Statistic {
 		fixFields();
 		load(c);
 	}
-	
+
 	public Statistic(String filename) throws FileNotFoundException {
 		//Code taken from Crunchify http://crunchify.com/java-how-to-parse-jsonobject-and-jsonarrays/
 		String jsonData = "";
@@ -71,21 +71,21 @@ public class Statistic {
 		JSONObject json = new JSONObject(jsonData);
 		retrieveResults(json);	
 	}
-	
-//	public Statistic(Map<String, Object> fields, FieldType[] required_fields) {
-//		this.fields = fields;
-//		this.api_endpoint = "";
-//		this.required_fields = required_fields;
-//		
-//	}
-	
+
+	//	public Statistic(Map<String, Object> fields, FieldType[] required_fields) {
+	//		this.fields = fields;
+	//		this.api_endpoint = "";
+	//		this.required_fields = required_fields;
+	//		
+	//	}
+
 	public void fixFields() {
 		if(api_fields == null) {
 			api_fields = new HashMap<String, Object>();
 		}
 		for(FieldType type: required_fields) {
 			if(!fields.containsKey(type)) {
-					fields.put(type, type.getDefault());
+				fields.put(type, type.getDefault());
 			}
 		}
 		for(FieldType type: fields.keySet()) {
@@ -94,9 +94,9 @@ public class Statistic {
 			}
 			api_fields.put(type.toString(), fields.get(type));
 		}
-		
+
 	}
-	
+
 	public void addFields(Map<FieldType, Object> additionalFields) {
 		for(FieldType type: additionalFields.keySet()) {
 			fields.put(type, additionalFields.get(type));
@@ -104,7 +104,7 @@ public class Statistic {
 		fixFields();
 		loaded = false;
 	}
-	
+
 	public void retrieveResults(JSONObject data) {
 		json = data;
 		description = data.getString("resource");
@@ -118,7 +118,7 @@ public class Statistic {
 			this.items = null;
 		}
 	}
-	
+
 	public void load(Connection c) {
 		if(api_endpoint == "") {
 			System.out.println("Endpoint missing");
@@ -129,9 +129,9 @@ public class Statistic {
 		}
 		loaded = true;
 		loadStatItems();
-		
+
 	}
-	
+
 	public void loadWithHeader(Connection c, Map<String, String> headers) {
 		if(api_endpoint == "") {
 			System.out.println("Endpoint missing");
@@ -143,61 +143,67 @@ public class Statistic {
 		loaded = true;
 		loadStatItems();
 	}
-	
+
 	public void loadStatItems() {
 		statItems = new LinkedList<StatItem>();
 		for(Object item: items) {
 			statItems.add(new StatItem((JSONObject)item));
 		}
 	}
-	
+
 	public void printItemDescriptions() {
 		checkLoad();
-			for(StatItem item: statItems) {
-				System.out.println(item.description);
-			}
-		
+		for(StatItem item: statItems) {
+			System.out.println(item.description);
+		}
 	}
-	
+
 	public StatItem getItem(int index) {
 		checkLoad();
-			return statItems.get(index);
+		return statItems.get(index);
 	}
-	
+
 	public void print() {
 		checkLoad();
-			for(StatItem item: statItems) item.print();
+		for(StatItem item: statItems) item.print();
 	}
-	
+
 	public void printItem(int index) {
 		checkLoad();
-			statItems.get(index).print();
+		statItems.get(index).print();
 	}
-	
+
 	public void printItems(int...indices) {
 		checkLoad();
+		if(indices.length == 0) {
+			for(StatItem item: statItems) {
+				item.print();
+			}
+		}
+		else {	
 			for(int i: indices) {
 				if(!(i >= statItems.size())) {
 					printItem(i);
 				}
 			}
-		
+		}
+
 	}
-	
+
 	public boolean isRequiredField(String field) {
 		if(required_fields.contains(FieldType.getFieldTypeFromString(field))) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public boolean isRequiredField(FieldType field) {
 		if(required_fields.contains(field)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void dumpJSON() {
 		String filename = description + "_" + LocalDate.now().toString() + "_" + new Random().nextInt(100); 
 		try {
@@ -208,17 +214,19 @@ public class Statistic {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void checkLoad() {
 		if(!loaded) load(StatsFactory.getConnection());
 	}
-	
+
 	public StatItem getItem(ItemType t) {
 		return getItem(t.getIndex());
 	}
-	
+
 	public interface ItemType {
-		
+
 		int getIndex();
 	}
+	
+	
 }
