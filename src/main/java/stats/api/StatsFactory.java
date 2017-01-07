@@ -22,39 +22,39 @@ public class StatsFactory {
 
 	private static Connection connection;
 	private static PlayerList player_list;
-	
+
 	static {
 		establishConnection();
 	}
-	
+
 	public static void establishConnection() {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("referer", Constants.SCORES_REFERER.toString());
 		connection = new Connection(Constants.API_URL.toString(), headers);
 		setUpdatedDefaults();
 	}
-	
+
 	public static Connection getConnection() {
-		if(connection == null) {
+		if (connection == null) {
 			establishConnection();
 		}
 		return connection;
 	}
-	
+
 	public static void setUpdatedDefaults() {
 		LocalDate date = LocalDate.now();
 		int year = date.getYear();
 		int month_val = date.getMonthValue();
-		if(month_val <= 8) {
+		if (month_val <= 8) {
 			year = year - 1;
 		}
-		String seasonYear = year + "-" + (year%100 + 1);
-		String month = "" +date.getMonthValue();
+		String seasonYear = year + "-" + (year % 100 + 1);
+		String month = "" + date.getMonthValue();
 		String day = "" + date.getDayOfMonth();
-		if(day.length() == 1){
+		if (day.length() == 1) {
 			day = "0" + day;
 		}
-		if(month.length() == 1) {
+		if (month.length() == 1) {
 			month = "0" + month;
 		}
 		String dateToday = month + "/" + day + "/" + date.getYear();
@@ -62,46 +62,46 @@ public class StatsFactory {
 		FieldType.SEASON.setDefault(seasonYear);
 		FieldType.SEASON_YEAR.setDefault(seasonYear);
 	}
-	
+
 	public static Scoreboard getTodayScoreboard() {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		Scoreboard score = new Scoreboard(fields, connection);
 		return score;
 	}
-	
+
 	public static Scoreboard getScoreboard(String game_date) {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		fields.put(FieldType.GAME_DATE, game_date);
 		Scoreboard score = new Scoreboard(fields, connection);
 		return score;
 	}
-	
+
 	public static Game getGame(String game_id) {
 		return new Game(game_id);
 	}
-	
+
 	public static PlayerList getPlayerList() {
-		if(player_list == null) {
+		if (player_list == null) {
 			Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 			player_list = new PlayerList(fields, connection);
 		}
 		return player_list;
 	}
-	
+
 	public static Player getPlayer(String category, String value) {
 		return getPlayerList().getPlayerBy(category, value);
-		
+
 	}
-	
+
 	public static List<Player> getPlayers(String category, String value) {
 		return getPlayerList().getPlayersBy(category, value);
-		 
+
 	}
-	
+
 	public static Team getTeam(String team_id) {
 		return new Team(team_id);
 	}
-	
+
 	public static TeamList getTeamList() {
 		return new TeamList(getConnection());
 	}
@@ -114,14 +114,14 @@ public class StatsFactory {
 	public static DraftCombine getCombine(String year) {
 		return new DraftCombine(year);
 	}
-	
+
 	public static PlayerVsPlayer getPlayerVsPlayer(String player1, String player2) {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		fields.put(FieldType.PLAYER_ID, player1);
 		fields.put(FieldType.VS_PLAYER_ID, player2);
 		return new PlayerVsPlayer(fields, getConnection());
 	}
-	
+
 	public static TeamVsPlayer getTeamVsPlayer(String team, String player) {
 		Map<FieldType, Object> fields = new HashMap<FieldType, Object>();
 		fields.put(FieldType.TEAM_ID, team);
@@ -129,5 +129,3 @@ public class StatsFactory {
 		return new TeamVsPlayer(fields, getConnection());
 	}
 }
-
-

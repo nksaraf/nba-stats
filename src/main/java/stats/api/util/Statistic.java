@@ -42,14 +42,15 @@ public class Statistic {
 	public Statistic(String endpoint, Map<FieldType, Object> fields, FieldType[] required_fields, Connection c) {
 		this.fields = fields;
 		this.api_endpoint = endpoint;
-		this.required_fields =  Arrays.asList(required_fields);
+		this.required_fields = Arrays.asList(required_fields);
 		loaded = false;
 		fixFields();
 		load(c);
 	}
 
 	public Statistic(String filename) throws FileNotFoundException {
-		//Code taken from Crunchify http://crunchify.com/java-how-to-parse-jsonobject-and-jsonarrays/
+		// Code taken from Crunchify
+		// http://crunchify.com/java-how-to-parse-jsonobject-and-jsonarrays/
 		String jsonData = "";
 		BufferedReader br = null;
 		try {
@@ -69,20 +70,20 @@ public class Statistic {
 			}
 		}
 		JSONObject json = new JSONObject(jsonData);
-		retrieveResults(json);	
+		retrieveResults(json);
 	}
 
 	public void fixFields() {
-		if(api_fields == null) {
+		if (api_fields == null) {
 			api_fields = new HashMap<String, Object>();
 		}
-		for(FieldType type: required_fields) {
-			if(!fields.containsKey(type)) {
+		for (FieldType type : required_fields) {
+			if (!fields.containsKey(type)) {
 				fields.put(type, type.getDefault());
 			}
 		}
-		for(FieldType type: fields.keySet()) {
-			if(!(type.possibleValue((String)fields.get(type)))) {
+		for (FieldType type : fields.keySet()) {
+			if (!(type.possibleValue((String) fields.get(type)))) {
 				fields.put(type, type.getDefault());
 			}
 			api_fields.put(type.toString(), fields.get(type));
@@ -91,7 +92,7 @@ public class Statistic {
 	}
 
 	public void addFields(Map<FieldType, Object> additionalFields) {
-		for(FieldType type: additionalFields.keySet()) {
+		for (FieldType type : additionalFields.keySet()) {
 			fields.put(type, additionalFields.get(type));
 		}
 		fixFields();
@@ -101,28 +102,25 @@ public class Statistic {
 	public void retrieveResults(JSONObject data) {
 		json = data;
 		description = data.getString("resource");
-		if(data.has("resultSets")) {
+		if (data.has("resultSets")) {
 			this.items = data.getJSONArray("resultSets");
-		}
-		else if(data.has("resultSet")) {
+		} else if (data.has("resultSet")) {
 			Object x = data.get("resultSet");
-			if(x instanceof JSONArray)
+			if (x instanceof JSONArray)
 				this.items = data.getJSONArray("resultSet");
-			else if(x instanceof JSONObject) {
+			else if (x instanceof JSONObject) {
 				items = new JSONArray();
-				items.put((JSONObject)x);
-			} 
-		}
-		else {
+				items.put((JSONObject) x);
+			}
+		} else {
 			this.items = null;
 		}
 	}
 
 	public void load(Connection c) {
-		if(api_endpoint == "") {
+		if (api_endpoint == "") {
 			System.out.println("Endpoint missing");
-		}
-		else {
+		} else {
 			JSONObject data = c.get(api_endpoint, api_fields);
 			retrieveResults(data);
 		}
@@ -132,10 +130,9 @@ public class Statistic {
 	}
 
 	public void loadWithHeader(Connection c, Map<String, String> headers) {
-		if(api_endpoint == "") {
+		if (api_endpoint == "") {
 			System.out.println("Endpoint missing");
-		}
-		else {
+		} else {
 			JSONObject data = c.get(api_endpoint, api_fields, headers);
 			retrieveResults(data);
 		}
@@ -145,14 +142,14 @@ public class Statistic {
 
 	public void loadStatItems() {
 		statItems = new LinkedList<StatItem>();
-		for(Object item: items) {
-			statItems.add(new StatItem((JSONObject)item));
+		for (Object item : items) {
+			statItems.add(new StatItem((JSONObject) item));
 		}
 	}
 
 	public void printItemDescriptions() {
 		checkLoad();
-		for(StatItem item: statItems) {
+		for (StatItem item : statItems) {
 			System.out.println(item.description);
 		}
 	}
@@ -164,7 +161,8 @@ public class Statistic {
 
 	public void print() {
 		checkLoad();
-		for(StatItem item: statItems) item.print();
+		for (StatItem item : statItems)
+			item.print();
 	}
 
 	public void printItem(int index) {
@@ -172,16 +170,15 @@ public class Statistic {
 		statItems.get(index).print();
 	}
 
-	public void printItems(int...indices) {
+	public void printItems(int... indices) {
 		checkLoad();
-		if(indices.length == 0) {
-			for(StatItem item: statItems) {
+		if (indices.length == 0) {
+			for (StatItem item : statItems) {
 				item.print();
 			}
-		}
-		else {	
-			for(int i: indices) {
-				if(!(i >= statItems.size())) {
+		} else {
+			for (int i : indices) {
+				if (!(i >= statItems.size())) {
 					printItem(i);
 				}
 			}
@@ -190,38 +187,39 @@ public class Statistic {
 	}
 
 	public boolean isRequiredField(String field) {
-		if(required_fields.contains(FieldType.getFieldTypeFromString(field))) {
+		if (required_fields.contains(FieldType.getFieldTypeFromString(field))) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isRequiredField(FieldType field) {
-		if(required_fields.contains(field)) {
+		if (required_fields.contains(field)) {
 			return true;
 		}
 		return false;
 	}
 
 	public void dumpJSON() {
-		String filename = description + "_" + LocalDate.now().toString() + "_" + new Random().nextInt(100); 
+		String filename = description + "_" + LocalDate.now().toString() + "_" + new Random().nextInt(100);
 		try {
 			FileWriter w = new FileWriter("samples/" + filename);
 			w.write(json.toString());
 			w.close();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void checkLoad() {
-		if(!loaded) load(StatsFactory.getConnection());
+		if (!loaded)
+			load(StatsFactory.getConnection());
 	}
 
 	public StatItem getItem(ItemType t) {
 		return getItem(t.getIndex());
 	}
-	
+
 	public void setEndpoint(String value) {
 		api_endpoint = value;
 	}
@@ -230,7 +228,5 @@ public class Statistic {
 
 		int getIndex();
 	}
-	
-	
-	
+
 }

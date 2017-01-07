@@ -5,7 +5,7 @@ import stats.api.util.Element;
 import stats.api.util.FieldType;
 
 public class DraftCombine extends Element {
-	
+
 	public DraftCombine(String season) {
 		super("00");
 		fields.put(FieldType.SEASON_YEAR, season);
@@ -13,24 +13,22 @@ public class DraftCombine extends Element {
 		features.put(Feature.DRILL_RESULTS, new DrillResults(fields));
 		features.put(Feature.SPOT_SHOOTING, new SpotShooting(fields));
 	}
-	
+
 	public DraftCombine(String season, Connection c) {
 		this(season);
 		load(c);
 	}
 
 	public enum Feature implements Element.Feature {
-			
-		SUMMARY("summary"),
-		DRILL_RESULTS("drillresults"),
-		SPOT_SHOOTING("spotshooting");
-		
+
+		SUMMARY("summary"), DRILL_RESULTS("drillresults"), SPOT_SHOOTING("spotshooting");
+
 		private String description;
-		
+
 		private Feature(String d) {
 			description = d;
 		}
-		
+
 		public String toString() {
 			return description;
 		}

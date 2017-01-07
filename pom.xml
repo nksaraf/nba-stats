@@ -7,12 +7,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Fantasy NBA</name>
 	<url>http://maven.apache.org</url>
-	<!-- <repositories>
-    <repository>
-        <id>j-text-utils-repo</id>
-        <url>http://jexem.googlecode.com/svn/trunk/repo/</url>
-    </repository>
-    </repositories> -->
+	<properties>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+	    <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <repositories>
+        <repository>
+            <id>d-maven</id>
+            <url>svn:https://j-text-utils.googlecode.com/svn/trunk/repo/</url>
+        </repository>
+    </repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
@@ -43,8 +47,8 @@
 		  <groupId>dnl.utils</groupId>
 		  <artifactId>j-text-utils</artifactId>
 		  <version>0.3.3</version>
-		  <systemPath>${project.basedir}/src/lib/j-text-utils-0.3.3.jar</systemPath>
-		  <scope>system</scope>
+		  <!-- <systemPath>${project.basedir}/../lib/j-text-utils-0.3.3.jar</systemPath>
+		  <scope>system</scope> -->
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
@@ -64,4 +68,24 @@
             <scope>provided</scope>
         </dependency>
 	</dependencies>
+	<build>
+	   <plugins>
+	       <plugin>
+		        <artifactId>maven-assembly-plugin</artifactId>
+		        <executions>
+		          <execution>
+		            <phase>package</phase>
+		            <goals>
+		              <goal>single</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		        <configuration>
+		          <descriptorRefs>
+		            <descriptorRef>jar-with-dependencies</descriptorRef>
+		          </descriptorRefs>
+		        </configuration>
+		      </plugin>
+	   </plugins>
+	</build>
 </project>

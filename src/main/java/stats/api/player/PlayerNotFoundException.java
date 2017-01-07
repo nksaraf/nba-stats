@@ -1,7 +1,7 @@
 package stats.api.player;
 
 public class PlayerNotFoundException extends Exception {
-	
+
 	/*
 	 * 
 	 */

@@ -9,30 +9,27 @@ import stats.api.util.Statistic;
 
 public class DrillResults extends Statistic {
 
-	private static FieldType[] required_fields = {
-			FieldType.LEAGUE,
-			FieldType.SEASON_YEAR
-		};
-	
+	private static FieldType[] required_fields = { FieldType.LEAGUE, FieldType.SEASON_YEAR };
+
 	public DrillResults(Map<FieldType, Object> fields) {
 		super(Constants.Endpoints.DRILL_RESULTS.toString(), fields, required_fields);
 	}
-	
+
 	public DrillResults(Map<FieldType, Object> fields, Connection c) {
 		super(Constants.Endpoints.DRILL_RESULTS.toString(), fields, required_fields, c);
 	}
-	
-	public enum ItemType implements Statistic.ItemType{
+
+	public enum ItemType implements Statistic.ItemType {
 		OVERALL(0);
-		
+
 		public int index;
-		
+
 		private ItemType(int index) {
 			this.index = index;
 		}
-		
+
 		public int getIndex() {
 			return index;
 		}
- 	}
+	}
 }

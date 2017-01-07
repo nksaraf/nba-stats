@@ -12,7 +12,7 @@ import stats.api.team.Teams;
 public class TeamCLI extends ElementCLI {
 
 	static Team team;
-	
+
 	static Map<String, TeamDashboard.Type> dash;
 	static {
 		dash = new HashMap<String, TeamDashboard.Type>();
@@ -31,56 +31,58 @@ public class TeamCLI extends ElementCLI {
 		dash.put("-dash-onoffsum", TeamDashboard.Type.PLAYER_ON_OFF_SUMMARY);
 		dash.put("-dash-onoffdet", TeamDashboard.Type.PLAYER_ON_OFF_DETAILS);
 	}
-	
+
 	public static void get(String args[]) {
 		try {
-			if(args[0].equals("-id"))
+			if (args[0].equals("-id"))
 				team = StatsFactory.getTeam(args[1]);
-			else if(args[0].equals("-code"))
+			else if (args[0].equals("-code"))
 				team = StatsFactory.getTeam(Teams.getTeamFromCode(args[1]).getID());
-			else throw new IllegalArgumentException("No player argument provided [id/name]");
+			else
+				throw new IllegalArgumentException("No player argument provided [id/name]");
 			teamOptions(Arrays.copyOfRange(args, 2, args.length));
 			options(Arrays.copyOfRange(args, 2, args.length));
-			
-		} catch(IllegalArgumentException e) {
+
+		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	static void teamOptions(String args[]) {
-		switch(args[0]) {
-			case "-sum": {
-				stat = team.getFeature(Team.Feature.SUMMARY);
-				break;
-			}
-			case "-seasons": {
-				stat = team.getFeature(Team.Feature.SEASONS);
-				break;
-			}
-			case "-roster": {
-				stat = team.getFeature(Team.Feature.ROSTER);
-				break;
-			}
-			case "-lineups": {
-				stat = team.getFeature(Team.Feature.LINEUPS);
-				break;
-			}
-			case "-log": {
-				stat = team.getFeature(Team.Feature.GAMELOG);
-				break;
-			}
-			case "-details": {
-				stat = team.getFeature(Team.Feature.DETAILS);
-				break;
-			}
-			case "-dash": {
-				stat = team.getFeature(Team.Feature.DASHBOARD);
-				break;
-			}
-			default: {
-				if(dash.get(args[0]) == null) throw new IllegalArgumentException("Illegal player element option provided.");
-				stat = team.getDashboard(dash.get(args[0]));
-			}
+		switch (args[0]) {
+		case "-sum": {
+			stat = team.getFeature(Team.Feature.SUMMARY);
+			break;
+		}
+		case "-seasons": {
+			stat = team.getFeature(Team.Feature.SEASONS);
+			break;
+		}
+		case "-roster": {
+			stat = team.getFeature(Team.Feature.ROSTER);
+			break;
+		}
+		case "-lineups": {
+			stat = team.getFeature(Team.Feature.LINEUPS);
+			break;
+		}
+		case "-log": {
+			stat = team.getFeature(Team.Feature.GAMELOG);
+			break;
+		}
+		case "-details": {
+			stat = team.getFeature(Team.Feature.DETAILS);
+			break;
+		}
+		case "-dash": {
+			stat = team.getFeature(Team.Feature.DASHBOARD);
+			break;
+		}
+		default: {
+			if (dash.get(args[0]) == null)
+				throw new IllegalArgumentException("Illegal player element option provided.");
+			stat = team.getDashboard(dash.get(args[0]));
+		}
 		}
 	}
 }

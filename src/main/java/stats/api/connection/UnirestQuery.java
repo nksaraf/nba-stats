@@ -14,35 +14,32 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequest;
 
 /**
- * @author nikhilsaraf
- * Implementation of Query based on the Unirest HTTP Client Api.
+ * @author nikhilsaraf Implementation of Query based on the Unirest HTTP Client
+ *         Api.
  */
 public class UnirestQuery implements Query {
 
 	HttpRequest request;
-	
+
 	public UnirestQuery(String base_url, String endpoint, Map<String, String> headers, Map<String, Object> fields) {
-		request = Unirest.get(base_url)
-				.routeParam("endpoint", endpoint)
-				.headers(headers)
-				.queryString(fields);
+		request = Unirest.get(base_url).routeParam("endpoint", endpoint).headers(headers).queryString(fields);
 	}
-	
+
 	public JSONObject getResponse() {
 		try {
 			HttpResponse<JsonNode> response = request.asJson();
-			if(response.getStatus() == 200) {
+			if (response.getStatus() == 200) {
 				return response.getBody().getObject();
-			}
-			else throw new UnirestException("Error while requesting from API");
+			} else
+				throw new UnirestException("Error while requesting from API");
 		} catch (UnirestException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 	public String getUrl() {
 		return request.getUrl();
 	}

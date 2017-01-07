@@ -29,53 +29,57 @@ public class PlayerCLI extends ElementCLI {
 		dash.put("-dash-shotlogpt", PlayerDashboard.Type.SHOT_LOG_TRACKING);
 		dash.put("-dash-reblogpt", PlayerDashboard.Type.REBOUND_LOG_TRACKING);
 	}
+
 	public static void get(String args[]) {
 		try {
-			if(args[0].equals("-id"))
+			if (args[0].equals("-id"))
 				player = StatsFactory.getPlayer("ID", args[1]);
-			else if(args[0].equals("-code"))
+			else if (args[0].equals("-code"))
 				player = StatsFactory.getPlayer("PLAYER_CODE", args[1]);
-			else throw new IllegalArgumentException("No player argument provided [id/code]");
-			if(player == null) throw new IllegalArgumentException("The player id/code was not recognized");
+			else
+				throw new IllegalArgumentException("No player argument provided [id/code]");
+			if (player == null)
+				throw new IllegalArgumentException("The player id/code was not recognized");
 			playerOptions(Arrays.copyOfRange(args, 2, args.length));
 			options(Arrays.copyOfRange(args, 2, args.length));
-			
-		} catch(IllegalArgumentException e) {
+
+		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	static void playerOptions(String args[]) {
-		switch(args[0]) {
-			case "-sum": {
-				stat = player.getFeature(Player.Feature.SUMMARY);
-				break;
-			}
-			case "-log": {
-				stat = player.getFeature(Player.Feature.GAME_LOG);
-				break;
-			}
-			case "-dash": {
-				stat = player.getDashboard();
-				break;
-			}
-			case "-career": {
-				stat = player.getFeature(Player.Feature.CAREER);
-				break;
-			}
-			case "-chart": {
-				stat = player.getFeature(Player.Feature.SHOT_CHART);
-				break;
-			}
-			default: {
-				if(dash.get(args[0]) == null) throw new IllegalArgumentException("Illegal player element option provided.");
-				stat = player.getDashboard(dash.get(args[0]));
-				
-			}
+		switch (args[0]) {
+		case "-sum": {
+			stat = player.getFeature(Player.Feature.SUMMARY);
+			break;
 		}
-		if(stat == null) {
+		case "-log": {
+			stat = player.getFeature(Player.Feature.GAME_LOG);
+			break;
+		}
+		case "-dash": {
+			stat = player.getDashboard();
+			break;
+		}
+		case "-career": {
+			stat = player.getFeature(Player.Feature.CAREER);
+			break;
+		}
+		case "-chart": {
+			stat = player.getFeature(Player.Feature.SHOT_CHART);
+			break;
+		}
+		default: {
+			if (dash.get(args[0]) == null)
+				throw new IllegalArgumentException("Illegal player element option provided.");
+			stat = player.getDashboard(dash.get(args[0]));
+
+		}
+		}
+		if (stat == null) {
 			throw new IllegalArgumentException("Illegal player element option provided.");
 		}
 	}
-	
+
 }
