@@ -1,8 +1,12 @@
 package stats.cli;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import stats.api.StatsFactory;
 import stats.api.util.FieldType;
@@ -13,7 +17,13 @@ class ElementCLI {
 	public static Statistic stat;
 
 	public static void options(String[] args) {
-		if (contains(args, "-f")) {
+		boolean fields = contains(args, "-f");
+		boolean help = contains(args, "-h");
+		boolean writeToFile = contains(args, "-w");
+		boolean printToConsole = contains(args, "-p");
+		boolean items = contains(args, "-i");
+		
+		if (fields) {
 			int indexField = Arrays.binarySearch(args, "-f");
 			int nextOption = nextOption(args, indexField + 1);
 			String fieldOptions[] = Arrays.copyOfRange(args, indexField + 1, nextOption);
@@ -21,26 +31,48 @@ class ElementCLI {
 		}
 		stat.checkLoad();
 
-		if (contains(args, "-h")) {
+		if (help) {
 			stat.printItemDescriptions();
 		}
-
-		if (contains(args, "-i")) {
+		String itemOptions[] = new String[stat.statItems.size()];
+		
+		if (items) {
 			int itemField = Arrays.binarySearch(args, "-i");
 			int nextOption = nextOption(args, itemField + 1);
-			String itemOptions[] = Arrays.copyOfRange(args, itemField + 1, nextOption);
-			printItems(itemOptions);
-		} else {
-			stat.printItems();
+			itemOptions = Arrays.copyOfRange(args, itemField + 1, nextOption);
+		} 
+		
+		PrintStream ps;
+		if(writeToFile) {
+			try {
+				ps = new PrintStream("samples/tables/" + stat.description + "_" + LocalDate.now().toString() + "_" + (new Random()).nextInt(100));
+				if(items) {
+					printItems(itemOptions, ps);
+				}
+				else {
+					stat.printItems(ps);
+				}
+			} catch(FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(printToConsole) {
+			if(items) {
+				printItems(itemOptions, System.out);
+			}
+			else {
+				stat.printItems(System.out);
+			}
 		}
 
 	}
 
-	public static void printItems(String itemOptions[]) {
+	public static void printItems(String itemOptions[], PrintStream ps) {
 		for (String item : itemOptions) {
 			try {
 
-				stat.printItem(Integer.parseInt(item));
+				stat.printItem(ps, Integer.parseInt(item));
 
 			} catch (NumberFormatException e) {
 			}

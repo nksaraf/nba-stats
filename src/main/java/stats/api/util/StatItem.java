@@ -1,5 +1,6 @@
 package stats.api.util;
 
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,11 +41,11 @@ public class StatItem {
 
 	}
 
-	public void print() {
+	public void print(PrintStream ps) {
 
-		System.out.println("\t\t\t\t" + description.toUpperCase());
-		table.printTable();
-		System.out.println("\n");
+		ps.println("\t\t\t\t" + description.toUpperCase());
+		table.printTable(ps, 0);
+		ps.println("\n");
 	}
 
 	public List<Object> getColumn(String header) {

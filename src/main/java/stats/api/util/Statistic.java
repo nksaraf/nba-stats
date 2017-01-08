@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -162,24 +163,24 @@ public class Statistic {
 	public void print() {
 		checkLoad();
 		for (StatItem item : statItems)
-			item.print();
+			item.print(System.out);
 	}
 
-	public void printItem(int index) {
+	public void printItem(PrintStream ps, int index) {
 		checkLoad();
-		statItems.get(index).print();
+		statItems.get(index).print(ps);
 	}
 
-	public void printItems(int... indices) {
+	public void printItems(PrintStream ps, int... indices) {
 		checkLoad();
 		if (indices.length == 0) {
 			for (StatItem item : statItems) {
-				item.print();
+				item.print(ps);
 			}
 		} else {
 			for (int i : indices) {
-				if (!(i >= statItems.size())) {
-					printItem(i);
+				if (!(i >= statItems.size() || i < 0)) {
+					printItem(ps, i);
 				}
 			}
 		}
