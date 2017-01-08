@@ -4,19 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.nsaraf98</groupId>
 	<artifactId>fantasy_nba</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Fantasy NBA</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/Nsaraf98/fantasy_nba</url>
 	<properties>
 	    <maven.compiler.source>1.8</maven.compiler.source>
 	    <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    <repositories>
-        <repository>
-            <id>d-maven</id>
-            <url>svn:https://j-text-utils.googlecode.com/svn/trunk/repo/</url>
-        </repository>
-    </repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
@@ -47,9 +41,8 @@
 		  <groupId>dnl.utils</groupId>
 		  <artifactId>j-text-utils</artifactId>
 		  <version>0.3.3</version>
-		  <!-- <systemPath>${project.basedir}/../lib/j-text-utils-0.3.3.jar</systemPath>
-		  <scope>system</scope> -->
-        </dependency>
+		  <scope>provided</scope>
+		</dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
