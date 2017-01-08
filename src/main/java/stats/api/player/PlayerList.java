@@ -21,7 +21,11 @@ import stats.api.util.Statistic;
  */
 public class PlayerList extends Statistic {
 
-	private static FieldType[] required_fields = { FieldType.LEAGUE, FieldType.SEASON, FieldType.ONLY_CURRENT };
+	private static FieldType[] required_fields = { 
+			FieldType.LEAGUE, 
+			FieldType.SEASON, 
+			FieldType.ONLY_CURRENT 
+		};
 
 	private List<Player> players;
 	private Map<String, Player> idToPlayer;

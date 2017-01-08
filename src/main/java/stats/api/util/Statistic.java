@@ -13,25 +13,67 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import stats.api.StatsFactory;
 import stats.api.connection.Connection;
 
+
+/**
+ * A <code>Statistic</code> is the data receieved from the NBA Stats API 
+ * by requesting a specific endpoint with specific fields. The data comprises
+ * of various tables which are represented via <code>statItems</code>, 
+ * a List of {@code StatItem}.
+ * 
+ * <p>It holds all the essential information required to make a request to the 
+ * API. It adds all the default values for fields not provided by the user. 
+ * It loads the data from the API, processes the <code>JSON</code> that is 
+ * returned and parses it to produce a list of StatItem objects. 
+ * It also has the original json dump. It also has functionality to print the
+ * data on the provided <code>PrintStream</code>.
+ * 
+ * <p>Clients do not usually deal with this class directly. This class is extended
+ * by all the other classes that represent different data endpoints. 
+ * 
+ * @author nikhilsaraf
+ */
 public class Statistic {
 
+	/** The dump of the data received from the API request */
 	public JSONObject json;
+	
+	/** The description of what this endpoint gives us information about */
 	public String description;
 	private JSONArray items;
 	private Map<String, Object> api_fields;
 	private String api_endpoint;
 	private Map<FieldType, Object> fields;
 	private List<FieldType> required_fields;
+	
+	/** 
+	 * The list of {@code StatItem} objects that represents every table of data
+	 */
 	public List<StatItem> statItems;
+	
+	/** 
+	 * True, if the <code>load</code> method has been called successfully after
+	 * any changes to the fields or endpoint. False, otherwise.
+	 */
 	public boolean loaded;
 
+	/**
+	 * Class Constructor. Creates a new Statistic object, with the information to
+	 * load the data from the API. Establishes the <code>api_endpoint</code> and
+	 * calls the {@code fixFields} method. Saves the list of required fields with 
+	 * the associated endpoint, to make a successful request.
+	 * 
+	 * <p>This constructor does not load the data automatically. Remember to 
+	 * call the {@code load} method before trying to access any of the data.
+	 * 
+	 * @param endpoint			string representing the endpoint to request the API with
+	 * @param fields			map of {@code FieldType}-Object representing the fields(params) to request the api with
+	 * @param required_fields	list of FieldType which are required to make successful request for the given endpoint
+	 */
 	public Statistic(String endpoint, Map<FieldType, Object> fields, FieldType[] required_fields) {
 		this.fields = fields;
 		this.api_endpoint = endpoint;
