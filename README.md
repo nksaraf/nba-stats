@@ -1,1 +1,1 @@
-# fantasy_nba - Java facing API for http://stats.nba.com/
+WIP Java API for http://stats.nba.com/
