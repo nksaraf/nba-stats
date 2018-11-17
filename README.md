@@ -1,2 +1,2 @@
 # NBA Stats
-WIP Java API for http://stats.nba.com/
+WIP Java wrapper for NBA Stats API (http://stats.nba.com/)
